@@ -30,14 +30,15 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   artworkContainer: {
-    flex: 1,
     width: "100%",
     maxWidth: 400,
+    aspectRatio: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: theme.spacing[4],
   },
   artwork: {
     width: "100%",
