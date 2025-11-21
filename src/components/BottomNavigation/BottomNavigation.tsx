@@ -6,7 +6,7 @@ import { Screen } from "../../navigation/AppNavigator";
 
 interface BottomNavigationProps {
   activeScreen: Screen;
-  onNavigate: (screen: Screen) => void;
+  onNavigate: (screen: Screen, track?: any) => void;
 }
 
 interface NavItem {
