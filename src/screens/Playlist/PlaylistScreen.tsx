@@ -7,10 +7,11 @@ import {
   SectionTitle,
 } from "../../components";
 import { Screen } from "../../navigation/AppNavigator";
+import { Track } from "../../types";
 import { styles } from "./styles";
 
 interface PlaylistScreenProps {
-  onNavigate?: (screen: Screen) => void;
+  onNavigate?: (screen: Screen, track?: Track) => void;
   activeScreen?: Screen;
 }
 
@@ -18,7 +19,7 @@ export const PlaylistScreen: React.FC<PlaylistScreenProps> = ({
   onNavigate,
   activeScreen = "Playlist",
 }) => {
-  const tracks = [
+  const tracks: Track[] = [
     {
       id: 1,
       title: "Miss you",
@@ -73,6 +74,7 @@ export const PlaylistScreen: React.FC<PlaylistScreenProps> = ({
               title={track.title}
               artist={track.artist}
               duration={track.duration}
+              onPress={() => onNavigate?.("Player", track)}
             />
           ))}
         </View>

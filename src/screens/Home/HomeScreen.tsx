@@ -11,10 +11,11 @@ import {
 } from "../../components";
 import { theme } from "../../theme";
 import { Screen } from "../../navigation/AppNavigator";
+import { Track } from "../../types";
 import { styles } from "./styles";
 
 interface HomeScreenProps {
-  onNavigate?: (screen: Screen) => void;
+  onNavigate?: (screen: Screen, track?: Track) => void;
   activeScreen?: Screen;
 }
 

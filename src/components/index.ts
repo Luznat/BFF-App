@@ -6,3 +6,5 @@ export { PostCard } from "./PostCard";
 export { TrackItem } from "./TrackItem";
 export { SectionTitle } from "./SectionTitle";
 export { ScreenContainer } from "./ScreenContainer";
+export { ProgressBar } from "./ProgressBar";
+export { PlaybackControls } from "./PlaybackControls";
