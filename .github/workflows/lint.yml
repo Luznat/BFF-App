@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - Release/1.0.0
 
 jobs:
   lint:
