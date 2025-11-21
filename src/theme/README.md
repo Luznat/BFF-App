@@ -18,7 +18,7 @@ import { theme } from "../theme";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.primary[500],
+    backgroundColor: theme.colors.primary,
     padding: theme.spacing[4],
     borderRadius: theme.borderRadius.md,
   },
@@ -40,7 +40,7 @@ function MyComponent() {
 
   const styles = StyleSheet.create({
     button: {
-      backgroundColor: theme.colors.primary[600],
+      backgroundColor: theme.colors.primary,
       padding: theme.spacing[3],
       borderRadius: theme.borderRadius.base,
     },
@@ -52,16 +52,39 @@ function MyComponent() {
 
 ## Cores Disponíveis
 
-- **Primary** - Cor principal do app (#af25f4 - roxo vibrante do evento)
-- **Secondary** - Cor secundária (roxo/magenta)
-- **Accent** - Cor de destaque (turquesa)
-- **Neutral** - Tons de cinza (escala Tailwind)
-- **Success** - Verde para sucesso
-- **Warning** - Amarelo para avisos
-- **Error** - Vermelho para erros
-- **Background** - Cores de fundo (light: #f7f5f8, dark: #1c1022, black: #000000)
-- **Text** - Cores de texto (primary: branco, secondary: cinza claro, tertiary: cinza médio, inverse: preto)
-- **Card** - Cores para cards (background com opacidade, border)
+### Cores Principais
+
+- **primary** - Cor principal do app (#af25f4 - roxo vibrante do evento)
+- **secondary** - Cor secundária (#d946ef - roxo/magenta)
+- **accent** - Cor de destaque (#14b8a6 - turquesa)
+
+### Estados
+
+- **success** - Verde para sucesso (#22c55e)
+- **warning** - Amarelo para avisos (#f59e0b)
+- **error** - Vermelho para erros (#ef4444)
+
+### Background
+
+- **background.main** - Fundo principal (#1c1022)
+- **background.surface** - Superfície elevada (#2a1533)
+- **background.light** - Fundo claro (#f7f5f8)
+
+### Text
+
+- **text.primary** - Texto principal (branco)
+- **text.secondary** - Texto secundário (#bcbcbc)
+- **text.muted** - Texto desativado (#7a7a7a)
+- **text.inverse** - Texto invertido (preto)
+
+### Card
+
+- **card.bg** - Fundo do card (rgba(255,255,255,0.06))
+- **card.border** - Borda do card (#3a2242)
+
+### Palette (Design Tokens)
+
+A `palette` contém variações de tons para uso em design tokens, não deve ser usada diretamente em componentes comuns. Inclui variações de primary, secondary, accent e neutral.
 
 ## Espaçamentos
 

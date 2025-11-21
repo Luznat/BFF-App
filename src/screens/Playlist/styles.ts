@@ -4,7 +4,7 @@ import { theme } from "../../theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background.black,
+    backgroundColor: theme.colors.background.main,
   },
   scrollContent: {
     paddingBottom: 80,
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     right: 0,
     backgroundColor: "rgba(0, 0, 0, 0.8)",
     borderTopWidth: 1,
-    borderTopColor: theme.colors.neutral[800],
+    borderTopColor: theme.colors.card.border,
     height: 80,
     flexDirection: "row",
     justifyContent: "space-around",
