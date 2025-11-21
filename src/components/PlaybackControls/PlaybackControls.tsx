@@ -39,7 +39,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
           name={isPlaying ? "pause" : "play"}
           size={36}
           color={theme.colors.background.main}
-          style={[styles.playIcon, !isPlaying && styles.playIconOffset]}
+          style={!isPlaying ? styles.playIconOffset : undefined}
         />
       </TouchableOpacity>
 
@@ -86,10 +86,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
   },
-  playIcon: {
-    textAlign: "center",
-  },
   playIconOffset: {
-    marginLeft: 2,
+    marginLeft: 6,
   },
 });
