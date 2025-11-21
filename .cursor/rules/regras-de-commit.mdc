@@ -1,0 +1,209 @@
+---
+alwaysApply: false
+---
+## Mensagens de Commit Proibidas
+
+❌ **Evitar:**
+
+- "fix" (genérico)  
+- "update" (sem contexto)  
+- "changes" (vago)  
+- "wip" (work in progress)  
+- Mensagens em inglês  
+- Mensagens com maiúsculas no início  
+
+✅ **Preferir:**
+
+- `fix(auth): corrigir verificação de token`  
+- `feat(api): adicionar endpoint de login`  
+- `refactor(routes): reorganizar middlewares`
+
+---
+
+## Commits Especiais
+
+### Breaking Changes
+
+```
+feat(users): alterar estrutura do payload de criação de usuário
+
+BREAKING CHANGE: o campo 'name' foi substituído por 'firstName' e 'lastName'.
+
+- Atualizar validações
+- Ajustar consumo na API
+- Corrigir testes relacionados
+```
+
+### Reversão de Commits
+
+```
+revert: feat(routes): adicionar rota de estatísticas
+
+This reverts commit 89abcd1.
+
+Motivo: Endpoint ainda não validado pela equipe de backend
+```
+
+---
+
+## Integração com Ferramentas
+
+### 1. Commitlint
+
+O projeto BFF utiliza **Commitlint** para validar mensagens automaticamente.
+
+Configuração (`commitlint.config.js`):
+
+- Valida tipos permitidos  
+- Verifica formato correto  
+- Garante o uso de letras minúsculas  
+
+### 2. Commitizen
+
+Para commits interativos, use:
+
+```bash
+npm run commit
+```
+
+### 3. Pre-commit Hooks
+
+Hooks executam automaticamente:
+
+- Linting (`npm run lint:fix`)  
+- Formatação (`npm run format`)  
+- Validação da mensagem de commit  
+
+---
+
+## Boas Práticas
+
+### 1. Commits Atômicos
+
+- Um commit = uma mudança lógica  
+- Não misturar diferentes tipos de alteração  
+- Facilita o histórico e reversões
+
+### 2. Mensagens Descritivas
+
+- Explique o **porquê**, não apenas o **o quê**  
+- Seja claro e direto  
+- Inclua contexto se necessário
+
+### 3. Frequência de Commits
+
+- Faça commits pequenos e frequentes  
+- Evite acumular muitas alterações em um único commit  
+
+### 4. Revisão Antes do Commit
+
+- Verifique arquivos staged: `git status`  
+- Veja diferenças: `git diff --staged`  
+- Teste antes de commitar  
+
+---
+
+## Fluxo de Trabalho
+
+### 1. Preparação
+
+```bash
+# Verificar status
+git status
+
+# Adicionar arquivos específicos
+git add src/routes/userRoutes.ts
+
+# Revisar mudanças
+git diff --staged
+```
+
+### 2. Commit
+
+```bash
+# Usando commitizen
+npm run commit
+
+# Ou manualmente
+git commit -m "feat(routes): criar endpoint de cadastro de usuário
+
+- Adicionar rota POST /users
+- Validar dados de entrada
+- Integrar com serviço de autenticação"
+```
+
+### 3. Verificação
+
+```bash
+# Último commit
+git log -1 --oneline
+
+# Histórico recente
+git log --oneline -5
+```
+
+---
+
+## Exemplos Práticos
+
+### Desenvolvimento de Funcionalidades
+
+```bash
+# Implementação
+git commit -m "feat(api): criar comunicação com microserviço de pagamentos"
+
+# Testes
+git commit -m "test(api): adicionar testes para microserviço de pagamentos"
+
+# Documentação
+git commit -m "docs(api): documentar rotas de pagamento"
+```
+
+### Correções e Melhorias
+
+```bash
+# Bug fix
+git commit -m "fix(routes): corrigir resposta do endpoint de login"
+
+# Performance
+git commit -m "perf(api): otimizar tempo de resposta de requisições"
+
+# Refatoração
+git commit -m "refactor(config): simplificar carregamento de variáveis de ambiente"
+```
+
+### Configuração e Manutenção
+
+```bash
+# Dependências
+git commit -m "build(deps): atualizar axios para v1.7.2"
+
+# CI/CD
+git commit -m "ci: configurar cache do node_modules no GitHub Actions"
+
+# Configuração
+git commit -m "chore(config): atualizar eslint e prettier"
+```
+
+---
+
+## Regras Específicas do BFF
+
+### 1. Padrões Arquiteturais
+
+- Mantenha a camada BFF isolada da lógica de microserviços  
+- Utilize interfaces claras para comunicação entre serviços  
+- Centralize regras de negócio no BFF, não nos clients  
+
+### 2. Segurança e Boas Práticas
+
+- Documente mudanças que impactam autenticação ou segurança  
+- Evite logs sensíveis  
+- Sempre valide dados recebidos de microserviços externos  
+
+### 3. Consistência e Padronização
+
+- Utilize nomes consistentes para rotas e arquivos  
+- Mantenha padrão de commits para facilitar automações  
+- Siga convenções da equipe para escopos e tipos de commits  
+
