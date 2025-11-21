@@ -1,11 +1,29 @@
 import React from "react";
-import { View, Text, ScrollView, Image, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { theme } from "../../theme";
+import { Logo } from "../../components";
 import { styles } from "./styles";
 
-export const HomeScreen = () => {
+import { Screen } from "../../navigation/AppNavigator";
+
+interface HomeScreenProps {
+  onNavigate?: (screen: Screen) => void;
+  activeScreen?: Screen;
+}
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({
+  onNavigate,
+  activeScreen = "Home",
+}) => {
   const countdown = {
     days: "07",
     hours: "07",
@@ -64,13 +82,13 @@ export const HomeScreen = () => {
             <View style={styles.headerGradient} />
           </ImageBackground>
           <View style={styles.headerContent}>
-            <Image
-              source={{
-                uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuC1aJITOQVm-6c1_MSgzsePUq3TNT4LMi3XWri-2AEHn0eBzHrL-ApixCmzvx5gBFJ9ro-ROZNe04K2R3t0bH5UcfxtGTlWQ6eixhZgMg95UfNkGW_KaWjfr-ipEcemwZ1oVujolioW3hq0zYT045lBU3qnwCsD798_zwnryDGS7svKLCVYpbD7_hSlTWrglpn0g_uw-RFgrASEtlwhca5bhugKyvsMlXT5sJJeQpqOVc8fVPVA75-0frb-ocjzdsJlODn4f06GLts",
-              }}
-              style={styles.logo}
-              resizeMode="contain"
-            />
+            <View style={styles.logoContainer}>
+              <Logo
+                width={120}
+                height={120}
+                color={theme.colors.text.primary}
+              />
+            </View>
             <Text style={styles.title}>BFF Brasil Feelings Festival</Text>
           </View>
         </View>
@@ -139,26 +157,94 @@ export const HomeScreen = () => {
       </ScrollView>
 
       <View style={styles.bottomNav}>
-        <View style={styles.navItem}>
-          <Feather name="home" size={22} color={theme.colors.text.primary} />
-          <Text style={[styles.navLabel, styles.navLabelActive]}>Início</Text>
-        </View>
-        <View style={styles.navItem}>
-          <Feather name="music" size={22} color={theme.colors.text.secondary} />
-          <Text style={styles.navLabel}>Line-up</Text>
-        </View>
-        <View style={styles.navItem}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => onNavigate?.("Home")}
+        >
+          <Feather
+            name="home"
+            size={22}
+            color={
+              activeScreen === "Home"
+                ? theme.colors.text.primary
+                : theme.colors.text.secondary
+            }
+          />
+          <Text
+            style={[
+              styles.navLabel,
+              activeScreen === "Home" && styles.navLabelActive,
+            ]}
+          >
+            Início
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => onNavigate?.("Playlist")}
+        >
+          <Feather
+            name="music"
+            size={22}
+            color={
+              activeScreen === "Playlist"
+                ? theme.colors.text.primary
+                : theme.colors.text.secondary
+            }
+          />
+          <Text
+            style={[
+              styles.navLabel,
+              activeScreen === "Playlist" && styles.navLabelActive,
+            ]}
+          >
+            Playlist
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => onNavigate?.("Tickets")}
+        >
           <Ionicons
             name="ticket-outline"
             size={22}
-            color={theme.colors.text.secondary}
+            color={
+              activeScreen === "Tickets"
+                ? theme.colors.text.primary
+                : theme.colors.text.secondary
+            }
           />
-          <Text style={styles.navLabel}>Ingressos</Text>
-        </View>
-        <View style={styles.navItem}>
-          <Feather name="user" size={22} color={theme.colors.text.secondary} />
-          <Text style={styles.navLabel}>Perfil</Text>
-        </View>
+          <Text
+            style={[
+              styles.navLabel,
+              activeScreen === "Tickets" && styles.navLabelActive,
+            ]}
+          >
+            Ingressos
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => onNavigate?.("Profile")}
+        >
+          <Feather
+            name="user"
+            size={22}
+            color={
+              activeScreen === "Profile"
+                ? theme.colors.text.primary
+                : theme.colors.text.secondary
+            }
+          />
+          <Text
+            style={[
+              styles.navLabel,
+              activeScreen === "Profile" && styles.navLabelActive,
+            ]}
+          >
+            Perfil
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -9,6 +9,38 @@ export const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 80,
   },
+  bottomNav: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.neutral[800],
+    height: 80,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingHorizontal: theme.spacing[4],
+  },
+  navItem: {
+    alignItems: "center",
+    gap: theme.spacing[1],
+  },
+  navIcon: {
+    color: theme.colors.text.secondary,
+  },
+  navIconActive: {
+    color: theme.colors.text.primary,
+  },
+  navLabel: {
+    fontSize: theme.typography.fontSize.xs,
+    color: theme.colors.text.secondary,
+  },
+  navLabelActive: {
+    color: theme.colors.text.primary,
+    fontWeight: theme.typography.fontWeight.medium,
+  },
   header: {
     height: "45%",
     width: "100%",
@@ -32,11 +64,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  logo: {
-    width: 120,
-    height: 40,
-    resizeMode: "contain",
+  logoContainer: {
     marginBottom: theme.spacing[2],
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: theme.typography.fontSize["3xl"],
@@ -143,37 +174,5 @@ export const styles = StyleSheet.create({
   postDescription: {
     fontSize: theme.typography.fontSize.sm,
     color: theme.colors.text.secondary,
-  },
-  bottomNav: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.neutral[800],
-    height: 80,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingHorizontal: theme.spacing[4],
-  },
-  navItem: {
-    alignItems: "center",
-    gap: theme.spacing[1],
-  },
-  navIcon: {
-    color: theme.colors.text.secondary,
-  },
-  navIconActive: {
-    color: theme.colors.text.primary,
-  },
-  navLabel: {
-    fontSize: theme.typography.fontSize.xs,
-    color: theme.colors.text.secondary,
-  },
-  navLabelActive: {
-    color: theme.colors.text.primary,
-    fontWeight: theme.typography.fontWeight.medium,
   },
 });
