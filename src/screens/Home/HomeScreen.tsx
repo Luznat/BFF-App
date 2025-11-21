@@ -1,19 +1,17 @@
 import React from "react";
+import { View, Text, ImageBackground } from "react-native";
 import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Feather, Ionicons } from "@expo/vector-icons";
+  ScreenContainer,
+  BottomNavigation,
+  Countdown,
+  InfoCard,
+  PostCard,
+  SectionTitle,
+  Logo,
+} from "../../components";
 import { theme } from "../../theme";
-import { Logo } from "../../components";
-import { styles } from "./styles";
-
 import { Screen } from "../../navigation/AppNavigator";
+import { styles } from "./styles";
 
 interface HomeScreenProps {
   onNavigate?: (screen: Screen) => void;
@@ -30,11 +28,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
     minutes: "07",
   };
 
-  const eventInfo = {
-    location: "Portal do trance Goiânia (GO)",
-    date: "03/10/25",
-    time: "18:00 - 06:00",
-  };
+  const eventInfo = [
+    {
+      icon: "📍",
+      text: `Local: Portal do trance Goiânia (GO)`,
+    },
+    {
+      icon: "📅",
+      text: `Data: 03/10/25`,
+    },
+    {
+      icon: "🕐",
+      text: `Horário: 18:00 - 06:00`,
+    },
+  ];
 
   const posts = [
     {
@@ -56,21 +63,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
     {
       id: 3,
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCS-UPINS3-dAVZXrf1KtyuC7CV4FcV-hwNKIdn2zpsbKWk83ola_hRlAeQvdXIMzdOOiBry7dmdaqhW1p8KXVrXecyqoHpvcUN3BeBJbGI8hUMRbNYkN0AtC0wR-fDNeudieEAcckOal2CHYjrX5ov_kKi20JGLkxyKC6-7pOUCkXJQzeWGqfUqxkao7mqPiuTRZpteqSs0U1W47GdDO0eK9e7oMqngg063L-cXiUq2McDT3Dce068LdnQWF1XiGiTZlVxU4FrXjc",
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuCS-UPINS3-dAVZXrf1KtyuC7CV4Fv-hwNKIdn2zpsbKWk83ola_hRlAeQvdXIMzdOOiBry7dmdaqhW1p8KXVrXecyqoHpvcUN3BeBJbGI8hUMRbNYkN0AtC0wR-fDNeudieEAcckOal2CHYjrX5ov_kKi20JGLkxyKC6-7pOUCkXJQzeWGqfUqxkao7mqPiuTRZpteqSs0U1W47GdDO0eK9e7oMqngg063L-cXiUq2McDT3Dce068LdnQWF1XiGiTZlVxU4FrXjc",
       title: "Garanta seu Ingresso",
       description:
         "Os ingressos do segundo lote estão quase esgotados. Não fique de fora dessa celebração cósmica!",
     },
   ];
 
+  if (!onNavigate) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScreenContainer>
         <View style={styles.header}>
           <ImageBackground
             source={{
@@ -93,40 +99,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </View>
         </View>
 
-        <View style={styles.countdownSection}>
-          <Text style={styles.countdownLabel}>A magia começa em</Text>
-          <View style={styles.countdownContainer}>
-            <View style={styles.countdownItem}>
-              <Text style={styles.countdownValue}>{countdown.days}</Text>
-              <Text style={styles.countdownLabelItem}>Dias</Text>
-            </View>
-            <View style={styles.countdownItem}>
-              <Text style={styles.countdownValue}>{countdown.hours}</Text>
-              <Text style={styles.countdownLabelItem}>Horas</Text>
-            </View>
-            <View style={styles.countdownItem}>
-              <Text style={styles.countdownValue}>{countdown.minutes}</Text>
-              <Text style={styles.countdownLabelItem}>Minutos</Text>
-            </View>
-          </View>
-        </View>
+        <Countdown
+          days={countdown.days}
+          hours={countdown.hours}
+          minutes={countdown.minutes}
+        />
 
         <View style={styles.infoSection}>
-          <Text style={styles.sectionTitle}>Informações</Text>
-          <View style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoIcon}>📍</Text>
-              <Text style={styles.infoText}>Local: {eventInfo.location}</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoIcon}>📅</Text>
-              <Text style={styles.infoText}>Data: {eventInfo.date}</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoIcon}>🕐</Text>
-              <Text style={styles.infoText}>Horário: {eventInfo.time}</Text>
-            </View>
-          </View>
+          <SectionTitle>Informações</SectionTitle>
+          <InfoCard items={eventInfo} />
         </View>
 
         <View style={styles.descriptionSection}>
@@ -137,115 +118,21 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </View>
 
         <View style={styles.postsSection}>
-          <Text style={styles.sectionTitle}>Publicações do Evento</Text>
+          <SectionTitle>Publicações do Evento</SectionTitle>
           <View style={styles.postsContainer}>
             {posts.map((post) => (
-              <View key={post.id} style={styles.postItem}>
-                <Image
-                  source={{ uri: post.image }}
-                  style={styles.postImage}
-                  resizeMode="cover"
-                />
-                <View style={styles.postContent}>
-                  <Text style={styles.postTitle}>{post.title}</Text>
-                  <Text style={styles.postDescription}>{post.description}</Text>
-                </View>
-              </View>
+              <PostCard
+                key={post.id}
+                image={post.image}
+                title={post.title}
+                description={post.description}
+              />
             ))}
           </View>
         </View>
-      </ScrollView>
+      </ScreenContainer>
 
-      <View style={styles.bottomNav}>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Home")}
-        >
-          <Feather
-            name="home"
-            size={22}
-            color={
-              activeScreen === "Home"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Home" && styles.navLabelActive,
-            ]}
-          >
-            Início
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Playlist")}
-        >
-          <Feather
-            name="music"
-            size={22}
-            color={
-              activeScreen === "Playlist"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Playlist" && styles.navLabelActive,
-            ]}
-          >
-            Playlist
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Tickets")}
-        >
-          <Ionicons
-            name="ticket-outline"
-            size={22}
-            color={
-              activeScreen === "Tickets"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Tickets" && styles.navLabelActive,
-            ]}
-          >
-            Ingressos
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Profile")}
-        >
-          <Feather
-            name="user"
-            size={22}
-            color={
-              activeScreen === "Profile"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Profile" && styles.navLabelActive,
-            ]}
-          >
-            Perfil
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <BottomNavigation activeScreen={activeScreen} onNavigate={onNavigate} />
     </View>
   );
 };

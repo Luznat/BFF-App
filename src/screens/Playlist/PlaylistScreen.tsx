@@ -1,8 +1,11 @@
 import React from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { theme } from "../../theme";
+import { View } from "react-native";
+import {
+  ScreenContainer,
+  BottomNavigation,
+  TrackItem,
+  SectionTitle,
+} from "../../components";
 import { Screen } from "../../navigation/AppNavigator";
 import { styles } from "./styles";
 
@@ -30,7 +33,7 @@ export const PlaylistScreen: React.FC<PlaylistScreenProps> = ({
       artist: "Trakino, KALEX",
       duration: "3:53",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuC2NrB08sB2IhrEuOguhs8udxAaJRCqu7BSj3UtO4yieYeDsvql13FyWkG55CWBLZt4JaGM8-AJw6uErW989co9palFYMOu5UDLopby9KLe1ysCp0tklBdl7h9Fzv1P8psYK3ZtIti-_VdK3Zequ28kd5aBWtPh5I1bHbziTXorS-DnLSmg7m5KOW0B0VOlhjH5AW8wAMjpyo0UdsoDRwDjcetLNBwQuONhQo2ALxdKIrNQ-Z88XC9DB5z259Nw9h5NYcrhC_eUxXY",
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuC2NrB08sB2IhrEuOguhs8udxAaJRCqu7BSj3UtO4yieYeDsvql13FyWkG55CWBLZt4JaGM8-AJw6uErW989co9palFYMOu5UDLopby9KLe1ysCp0tklBdl7h9Fzv1F8psYK3ZtIti-_VdK3Zequ28kd5aBWtPh5I1bHbziTXorS-DnLSmg7m5KOW0B0VOlhjH5AW8wAMjpyo0UdsoDRwDjcetLNBwQuONhQo2ALxdKIrNQ-Z88XC9DB5z259Nw9h5NYcrhC_eUxXY",
     },
     {
       id: 3,
@@ -50,124 +53,32 @@ export const PlaylistScreen: React.FC<PlaylistScreenProps> = ({
     },
   ];
 
+  if (!onNavigate) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
-      <ScrollView
-        style={styles.container}
+      <ScreenContainer
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Playlist</Text>
+        <SectionTitle>Playlist</SectionTitle>
 
         <View style={styles.playlistContainer}>
           {tracks.map((track) => (
-            <View key={track.id} style={styles.trackItem}>
-              <Image
-                source={{ uri: track.image }}
-                style={styles.trackImage}
-                resizeMode="cover"
-              />
-              <View style={styles.trackInfo}>
-                <Text style={styles.trackTitle}>{track.title}</Text>
-                <Text style={styles.trackArtist}>{track.artist}</Text>
-              </View>
-              <Text style={styles.trackDuration}>{track.duration}</Text>
-            </View>
+            <TrackItem
+              key={track.id}
+              image={track.image}
+              title={track.title}
+              artist={track.artist}
+              duration={track.duration}
+            />
           ))}
         </View>
-      </ScrollView>
+      </ScreenContainer>
 
-      <View style={styles.bottomNav}>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Home")}
-        >
-          <Feather
-            name="home"
-            size={22}
-            color={
-              activeScreen === "Home"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Home" && styles.navLabelActive,
-            ]}
-          >
-            Início
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Playlist")}
-        >
-          <Feather
-            name="music"
-            size={22}
-            color={
-              activeScreen === "Playlist"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Playlist" && styles.navLabelActive,
-            ]}
-          >
-            Playlist
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Tickets")}
-        >
-          <Ionicons
-            name="ticket-outline"
-            size={22}
-            color={
-              activeScreen === "Tickets"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Tickets" && styles.navLabelActive,
-            ]}
-          >
-            Ingressos
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => onNavigate?.("Profile")}
-        >
-          <Feather
-            name="user"
-            size={22}
-            color={
-              activeScreen === "Profile"
-                ? theme.colors.text.primary
-                : theme.colors.text.secondary
-            }
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activeScreen === "Profile" && styles.navLabelActive,
-            ]}
-          >
-            Perfil
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <BottomNavigation activeScreen={activeScreen} onNavigate={onNavigate} />
     </View>
   );
 };

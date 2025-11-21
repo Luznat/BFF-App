@@ -20,10 +20,21 @@ Aplicativo mobile desenvolvido em React Native com Expo para eventos de música 
 ```
 BFF/
 ├── src/
-│   ├── components/     # Componentes reutilizáveis
+│   ├── components/     # Componentes reutilizáveis globais
+│   │   ├── BottomNavigation/
+│   │   ├── Countdown/
+│   │   ├── InfoCard/
+│   │   ├── PostCard/
+│   │   ├── TrackItem/
+│   │   ├── SectionTitle/
+│   │   ├── ScreenContainer/
+│   │   └── Logo.tsx
 │   ├── screens/         # Telas da aplicação
-│   ├── services/       # Serviços e APIs
-│   ├── utils/          # Funções utilitárias
+│   │   ├── Home/
+│   │   └── Playlist/
+│   ├── navigation/     # Sistema de navegação customizado
+│   ├── theme/          # Sistema de temas (cores, tipografia, espaçamento)
+│   ├── hooks/          # Custom hooks (useTheme)
 │   ├── types/          # Definições de tipos TypeScript
 │   └── constants/      # Constantes da aplicação
 ├── assets/             # Imagens e recursos estáticos
