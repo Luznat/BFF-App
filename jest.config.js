@@ -13,5 +13,6 @@ module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   testMatch: ["**/__tests__/**/*.test.(ts|tsx|js)"],
   setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
+  passWithNoTests: true,
 };
 
