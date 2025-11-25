@@ -52,7 +52,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
     if (item.iconFamily === "ionicons") {
       return (
         <Ionicons
-          name={item.iconName as keyof typeof Ionicons.glyphMap}
+          name={item.iconName}
           size={22}
           color={iconColor}
         />
@@ -61,7 +61,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
 
     return (
       <Feather
-        name={item.iconName as keyof typeof Feather.glyphMap}
+        name={item.iconName}
         size={22}
         color={iconColor}
       />
