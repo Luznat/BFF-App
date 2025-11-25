@@ -1,8 +1,2 @@
-export type {
-  Theme,
-  ThemeColors,
-  ThemeTypography,
-  ThemeSpacing,
-  ThemeBorderRadius,
-  ThemeShadows,
-} from "./theme";
+export * from "./track";
+export * from "./theme";

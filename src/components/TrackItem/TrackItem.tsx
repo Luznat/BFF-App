@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { theme } from "../../theme";
 
 interface TrackItemProps {
@@ -7,6 +7,7 @@ interface TrackItemProps {
   title: string;
   artist: string;
   duration: string;
+  onPress?: () => void;
 }
 
 export const TrackItem: React.FC<TrackItemProps> = ({
@@ -14,16 +15,21 @@ export const TrackItem: React.FC<TrackItemProps> = ({
   title,
   artist,
   duration,
+  onPress,
 }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
       <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
       <View style={styles.info}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.artist}>{artist}</Text>
       </View>
       <Text style={styles.duration}>{duration}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
