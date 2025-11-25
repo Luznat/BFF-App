@@ -17,7 +17,7 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({
   onBack,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState("1:45");
+  const [currentTime] = useState("1:45");
   const [totalTime] = useState("4:10");
   const [progress] = useState(42);
 

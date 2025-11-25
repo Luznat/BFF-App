@@ -3,10 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { theme } from "../../theme";
 import { Screen } from "../../navigation/AppNavigator";
+import { Track } from "../../types";
 
 interface BottomNavigationProps {
   activeScreen: Screen;
-  onNavigate: (screen: Screen, track?: any) => void;
+  onNavigate: (screen: Screen, track?: Track) => void;
 }
 
 interface NavItem {
@@ -50,11 +51,21 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
 
     if (item.iconFamily === "ionicons") {
       return (
-        <Ionicons name={item.iconName as any} size={22} color={iconColor} />
+        <Ionicons
+          name={item.iconName as keyof typeof Ionicons.glyphMap}
+          size={22}
+          color={iconColor}
+        />
       );
     }
 
-    return <Feather name={item.iconName as any} size={22} color={iconColor} />;
+    return (
+      <Feather
+        name={item.iconName as keyof typeof Feather.glyphMap}
+        size={22}
+        color={iconColor}
+      />
+    );
   };
 
   return (
