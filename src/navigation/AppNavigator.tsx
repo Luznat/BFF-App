@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { HomeScreen } from "../screens/Home/HomeScreen";
 import { PlaylistScreen } from "../screens/Playlist/PlaylistScreen";
 import { PlayerScreen } from "../screens/Player";
+import { TicketsScreen } from "../screens/Tickets";
 import { Track } from "../types";
 
 export type Screen = "Home" | "Playlist" | "Tickets" | "Profile" | "Player";
@@ -55,7 +56,7 @@ export const AppNavigator = () => {
         );
       case "Tickets":
         return (
-          <HomeScreen
+          <TicketsScreen
             onNavigate={handleNavigate}
             activeScreen={navigationState.screen}
           />
