@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { ScreenContainer, BottomNavigation, SectionTitle } from "../../components";
-import { theme } from "../../theme";
+import { View } from "react-native";
+import {
+  ScreenContainer,
+  BottomNavigation,
+  SectionTitle,
+  TicketCard,
+  CheckoutFooter,
+} from "../../components";
 import { Screen } from "../../navigation/AppNavigator";
 import { styles } from "./styles";
 
@@ -69,80 +73,26 @@ export const TicketsScreen: React.FC<TicketsScreenProps> = ({
           {ticketTypes.map((ticket) => {
             const quantity = quantities[ticket.id] || 0;
             return (
-              <View key={ticket.id} style={styles.ticketCard}>
-                <View style={styles.ticketIconContainer}>
-                  <Ionicons name="ticket-outline" size={24} color={theme.colors.text.primary} />
-                </View>
-                <View style={styles.ticketContent}>
-                  <Text style={styles.ticketName}>{ticket.name}</Text>
-                  <Text style={styles.ticketDescription}>
-                    {ticket.description}
-                    {ticket.highlight && (
-                      <Text style={styles.ticketHighlight}> {ticket.highlight}</Text>
-                    )}
-                  </Text>
-                  <Text style={styles.ticketPrice}>
-                    R$ {ticket.price.toFixed(2).replace(".", ",")}
-                  </Text>
-                  <View style={styles.quantityContainer}>
-                    <Text style={styles.quantityLabel}>Quantidade</Text>
-                    <View style={styles.quantitySelector}>
-                      <TouchableOpacity
-                        style={[
-                          styles.quantityButton,
-                          quantity === 0 && styles.quantityButtonDisabled,
-                        ]}
-                        onPress={() => handleQuantityChange(ticket.id, -1)}
-                        disabled={quantity === 0}
-                        activeOpacity={0.7}
-                      >
-                        <Text
-                          style={[
-                            styles.quantityButtonText,
-                            quantity === 0 && styles.quantityButtonTextDisabled,
-                          ]}
-                        >
-                          -
-                        </Text>
-                      </TouchableOpacity>
-                      <Text style={styles.quantityValue}>{quantity}</Text>
-                      <TouchableOpacity
-                        style={styles.quantityButton}
-                        onPress={() => handleQuantityChange(ticket.id, 1)}
-                        activeOpacity={0.7}
-                      >
-                        <Text style={styles.quantityButtonText}>+</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
+              <TicketCard
+                key={ticket.id}
+                name={ticket.name}
+                description={ticket.description}
+                price={ticket.price}
+                quantity={quantity}
+                highlight={ticket.highlight}
+                onQuantityIncrease={() => handleQuantityChange(ticket.id, 1)}
+                onQuantityDecrease={() => handleQuantityChange(ticket.id, -1)}
+              />
             );
           })}
         </View>
       </ScreenContainer>
 
-      <View style={styles.footer}>
-        <View style={styles.footerRow}>
-          <Text style={styles.footerLabel}>Subtotal</Text>
-          <Text style={styles.footerValue}>
-            R$ {subtotal.toFixed(2).replace(".", ",")}
-          </Text>
-        </View>
-        <View style={styles.footerRow}>
-          <Text style={styles.footerLabelTotal}>Total</Text>
-          <Text style={styles.footerValueTotal}>
-            R$ {total.toFixed(2).replace(".", ",")}
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={styles.paymentButton}
-          onPress={handlePayment}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.paymentButtonText}>Ir para o Pagamento</Text>
-        </TouchableOpacity>
-      </View>
+      <CheckoutFooter
+        subtotal={subtotal}
+        total={total}
+        onPayment={handlePayment}
+      />
 
       <BottomNavigation activeScreen={activeScreen} onNavigate={onNavigate} />
     </View>

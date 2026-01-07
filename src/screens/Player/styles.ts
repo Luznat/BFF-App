@@ -7,26 +7,6 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.background.main,
     padding: theme.spacing[6],
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingBottom: theme.spacing[6],
-  },
-  backButton: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerTitle: {
-    fontSize: theme.typography.fontSize.base,
-    fontWeight: theme.typography.fontWeight.bold,
-    color: theme.colors.text.primary,
-    textTransform: "uppercase",
-    letterSpacing: 4,
-  },
-  placeholder: {
-    width: 40,
-  },
   content: {
     flex: 1,
     alignItems: "center",

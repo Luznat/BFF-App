@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { View, Text, Image } from "react-native";
+import { ProgressBar, PlaybackControls, ScreenHeader } from "../../components";
 import { theme } from "../../theme";
-import { ProgressBar } from "../../components/ProgressBar";
-import { PlaybackControls } from "../../components/PlaybackControls";
 import { Track } from "../../types";
 import { styles } from "./styles";
 
@@ -35,21 +33,7 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={onBack}
-          activeOpacity={0.7}
-        >
-          <Feather
-            name="chevron-down"
-            size={28}
-            color={theme.colors.text.primary}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Now Playing</Text>
-        <View style={styles.placeholder} />
-      </View>
+      <ScreenHeader title="Now Playing" onBack={onBack} />
 
       <View style={styles.content}>
         <View style={styles.artworkContainer}>

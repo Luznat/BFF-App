@@ -8,3 +8,7 @@ export { SectionTitle } from "./SectionTitle";
 export { ScreenContainer } from "./ScreenContainer";
 export { ProgressBar } from "./ProgressBar";
 export { PlaybackControls } from "./PlaybackControls";
+export { QuantitySelector } from "./QuantitySelector";
+export { CheckoutFooter } from "./CheckoutFooter";
+export { ScreenHeader } from "./ScreenHeader";
+export { TicketCard } from "./TicketCard";
