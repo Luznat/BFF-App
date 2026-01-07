@@ -19,7 +19,11 @@ interface TicketType {
 }
 
 interface TicketsScreenProps {
-  onNavigate?: (screen: Screen) => void;
+  onNavigate?: (
+    screen: Screen,
+    track?: any,
+    paymentData?: { total: number; ticketQuantity: number; ticketPrice: number }
+  ) => void;
   activeScreen?: Screen;
 }
 
@@ -57,7 +61,18 @@ export const TicketsScreen: React.FC<TicketsScreenProps> = ({
   const total = subtotal;
 
   const handlePayment = () => {
-    // TODO: Implementar navegação para tela de pagamento
+    if (!onNavigate) return;
+    
+    const ticket = ticketTypes[0];
+    const quantity = quantities[ticket.id] || 0;
+    
+    if (quantity > 0) {
+      onNavigate("Payment", undefined, {
+        total: total,
+        ticketQuantity: quantity,
+        ticketPrice: ticket.price,
+      });
+    }
   };
 
   if (!onNavigate) {
