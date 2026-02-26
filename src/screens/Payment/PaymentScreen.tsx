@@ -1,7 +1,18 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Switch, StyleSheet } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Switch,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
-import { ScreenContainer, ScreenHeader } from "../../components";
+import { ScreenHeader } from "../../components";
 import { theme } from "../../theme";
 import { styles } from "./styles";
 
@@ -26,9 +37,48 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvv, setCardCvv] = useState("");
   const [saveCard, setSaveCard] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const cardNumberInputRef = useRef<TextInput>(null);
+  const cardNameInputRef = useRef<TextInput>(null);
+  const cardExpiryInputRef = useRef<TextInput>(null);
+  const cardCvvInputRef = useRef<TextInput>(null);
 
   const serviceFee = total * 0.1;
   const finalTotal = total + serviceFee;
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  const scrollToInput = (inputRef: React.RefObject<TextInput>) => {
+    setTimeout(() => {
+      inputRef.current?.measureLayout(
+        scrollViewRef.current as any,
+        (x, y) => {
+          scrollViewRef.current?.scrollTo({ y: y - 100, animated: true });
+        },
+        () => {}
+      );
+    }, 100);
+  };
 
   const formatCardNumber = (text: string) => {
     const cleaned = text.replace(/\s/g, "");
@@ -57,8 +107,22 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <ScreenContainer contentContainerStyle={styles.scrollContent}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    >
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollContent,
+          !keyboardVisible && styles.scrollContentNoKeyboard,
+        ]}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+      >
         <ScreenHeader title="PAGAMENTO" onBack={onBack} backIcon="arrow-left" />
 
         <View style={styles.orderSummary}>
@@ -85,7 +149,7 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
 
             <View style={styles.summaryItem}>
               <View style={styles.summaryItemLeft}>
-                <Feather name="receipt" size={20} color={theme.colors.text.primary} />
+                <Feather name="file-text" size={20} color={theme.colors.text.primary} />
                 <View style={styles.summaryItemText}>
                   <Text style={styles.summaryItemTitle}>Taxa de Serviço</Text>
                   <Text style={styles.summaryItemSubtitle}>10% processamento</Text>
@@ -171,6 +235,7 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                 style={styles.inputIcon}
               />
               <TextInput
+                ref={cardNumberInputRef}
                 style={styles.input}
                 placeholder="0000 0000 0000 0000"
                 placeholderTextColor={theme.colors.text.muted}
@@ -178,6 +243,9 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                 onChangeText={handleCardNumberChange}
                 keyboardType="numeric"
                 maxLength={19}
+                onFocus={() => scrollToInput(cardNumberInputRef)}
+                returnKeyType="next"
+                onSubmitEditing={() => cardNameInputRef.current?.focus()}
               />
               {cardNumber.length === 19 && (
                 <Feather
@@ -197,12 +265,16 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                 style={styles.inputIcon}
               />
               <TextInput
+                ref={cardNameInputRef}
                 style={styles.input}
                 placeholder="NOME COMO IMPRESSO"
                 placeholderTextColor={theme.colors.text.muted}
                 value={cardName}
                 onChangeText={setCardName}
                 autoCapitalize="characters"
+                onFocus={() => scrollToInput(cardNameInputRef)}
+                returnKeyType="next"
+                onSubmitEditing={() => cardExpiryInputRef.current?.focus()}
               />
             </View>
 
@@ -215,6 +287,7 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                   style={styles.inputIcon}
                 />
                 <TextInput
+                  ref={cardExpiryInputRef}
                   style={styles.input}
                   placeholder="MM/AA"
                   placeholderTextColor={theme.colors.text.muted}
@@ -222,6 +295,9 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                   onChangeText={handleExpiryChange}
                   keyboardType="numeric"
                   maxLength={5}
+                  onFocus={() => scrollToInput(cardExpiryInputRef)}
+                  returnKeyType="next"
+                  onSubmitEditing={() => cardCvvInputRef.current?.focus()}
                 />
               </View>
 
@@ -233,6 +309,7 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                   style={styles.inputIcon}
                 />
                 <TextInput
+                  ref={cardCvvInputRef}
                   style={styles.input}
                   placeholder="123"
                   placeholderTextColor={theme.colors.text.muted}
@@ -241,6 +318,8 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
                   keyboardType="numeric"
                   maxLength={4}
                   secureTextEntry
+                  onFocus={() => scrollToInput(cardCvvInputRef)}
+                  returnKeyType="done"
                 />
               </View>
             </View>
@@ -287,8 +366,8 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
             AMBIENTE SEGURO & CRIPTOGRAFADO
           </Text>
         </View>
-      </ScreenContainer>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -28,6 +28,8 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: theme.spacing[4],
+    width: "100%",
   },
   logoContainer: {
     marginBottom: theme.spacing[2],

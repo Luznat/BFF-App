@@ -6,10 +6,17 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background.main,
   },
+  scrollView: {
+    flex: 1,
+  },
   scrollContent: {
-    paddingTop: 64,
+    paddingTop: theme.spacing[6],
     paddingHorizontal: theme.spacing[4],
     paddingBottom: theme.spacing[8],
+    flexGrow: 1,
+  },
+  scrollContentNoKeyboard: {
+    paddingBottom: theme.spacing[4],
   },
   orderSummary: {
     marginBottom: theme.spacing[6],
